@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Colaboração para Projetos Sustentáveis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>Login - Colaboração para Projetos Sustentáveis</header>
+        <form id="login-form" action="principal.html">
+            <div class="field email">
+                <div class="input-area">
+                    <input type="text" placeholder="E-mail">
+                    <i class="icon fas fa-envelope"></i>
+                    <i class="error error-icon fas fa-exclamation-circle"></i>
+                </div>
+                <div class="error error-txt">Email não pode ficar em branco</div>
+            </div>
+            <div class="field password">
+                <div class="input-area">
+                    <input type="password" placeholder="Senha">
+                    <i class="icon fas fa-lock"></i>
+                    <i class="error error-icon fas fa-exclamation-circle"></i>
+                </div>
+                <div class="error error-txt">Senha não pode ficar em branco</div>
+            </div>
+            <div class="pass-txt"><a href="#">Esqueceu a senha?</a></div>
+            <input type="submit" value="Login">
+        </form>
+        <div class="sign-txt">Ainda não é membro? <a href="cadastro.html">Cadastre-se agora</a></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.querySelector("#login-form");
+
+            if (loginForm) {
+                const eField = loginForm.querySelector(".email");
+                const eInput = eField.querySelector("input");
+                const pField = loginForm.querySelector(".password");
+                const pInput = pField.querySelector("input");
+
+                loginForm.onsubmit = (e) => {
+                    e.preventDefault();
+
+                    (eInput.value == "") ? eField.classList.add("shake", "error"): checkEmail();
+                    (pInput.value == "") ? pField.classList.add("shake", "error"): checkPass();
+
+                    setTimeout(() => {
+                        eField.classList.remove("shake");
+                        pField.classList.remove("shake");
+                    }, 500);
+
+                    eInput.onkeyup = () => { checkEmail(); }
+                    pInput.onkeyup = () => { checkPass(); }
+
+                    function checkEmail() {
+                        if (eInput.value == "") {
+                            eField.classList.add("error");
+                            eField.classList.remove("valid");
+                        } else {
+                            eField.classList.remove("error");
+                            eField.classList.add("valid");
+                        }
+                    }
+
+                    function checkPass() {
+                        if (pInput.value == "") {
+                            pField.classList.add("error");
+                            pField.classList.remove("valid");
+                        } else {
+                            pField.classList.remove("error");
+                            pField.classList.add("valid");
+                        }
+                    }
+
+                    if (!eField.classList.contains("error") && !pField.classList.contains("error")) {
+                        console.log("Autenticação bem-sucedida. Redirecionando...");
+                        setTimeout(() => {
+                            window.location.href = "principal.html";
+                        }, 1000);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
