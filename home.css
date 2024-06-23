@@ -684,4 +684,14 @@ section {
     margin-bottom: 1rem;
 }
 
+.back-btn {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #5372F0;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
 

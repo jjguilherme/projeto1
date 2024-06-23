@@ -12,10 +12,10 @@
 <body>
     <div class="wrapper">
         <header>Login - Colaboração para Projetos Sustentáveis</header>
-        <form id="login-form" action="principal.html">
+        <form id="login-form">
             <div class="field email">
                 <div class="input-area">
-                    <input type="text" placeholder="E-mail">
+                    <input type="text" placeholder="E-mail" id="login-email">
                     <i class="icon fas fa-envelope"></i>
                     <i class="error error-icon fas fa-exclamation-circle"></i>
                 </div>
@@ -23,7 +23,7 @@
             </div>
             <div class="field password">
                 <div class="input-area">
-                    <input type="password" placeholder="Senha">
+                    <input type="password" placeholder="Senha" id="login-password">
                     <i class="icon fas fa-lock"></i>
                     <i class="error error-icon fas fa-exclamation-circle"></i>
                 </div>
@@ -32,7 +32,7 @@
             <div class="pass-txt"><a href="#">Esqueceu a senha?</a></div>
             <input type="submit" value="Login">
         </form>
-        <div class="sign-txt">Ainda não é membro? <a href="cadastro.html">Cadastre-se agora</a></div>
+        <div class="sign-txt">Ainda não é membro? <a href="admin.html">Cadastre-se agora</a></div>
     </div>
 
     <script>
@@ -48,8 +48,8 @@
                 loginForm.onsubmit = (e) => {
                     e.preventDefault();
 
-                    (eInput.value == "") ? eField.classList.add("shake", "error"): checkEmail();
-                    (pInput.value == "") ? pField.classList.add("shake", "error"): checkPass();
+                    (eInput.value == "") ? eField.classList.add("shake", "error") : checkEmail();
+                    (pInput.value == "") ? pField.classList.add("shake", "error") : checkPass();
 
                     setTimeout(() => {
                         eField.classList.remove("shake");
@@ -80,10 +80,18 @@
                     }
 
                     if (!eField.classList.contains("error") && !pField.classList.contains("error")) {
-                        console.log("Autenticação bem-sucedida. Redirecionando...");
-                        setTimeout(() => {
-                            window.location.href = "principal.html";
-                        }, 1000);
+                        let users = JSON.parse(localStorage.getItem("users")) || [];
+                        const user = users.find(user => user.email === eInput.value && user.password === pInput.value);
+
+                        if (user) {
+                            console.log("Autenticação bem-sucedida. Redirecionando...");
+                            setTimeout(() => {
+                                window.location.href = "principal.html";
+                            }, 1000);
+                        } else {
+                            console.log("Email ou senha incorretos");
+                            alert("Email ou senha incorretos");
+                        }
                     }
                 }
             }
